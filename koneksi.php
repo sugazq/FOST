@@ -1,25 +1,14 @@
-<?php 
-$koneksi = mysqli_connect("localhost","root","","sipeka");
+<?php
+$host = "localhost"; // Ganti dengan host database Anda
+$user = "root"; // Ganti dengan username database Anda
+$password = ""; // Ganti dengan password database Anda
+$database = "fostreal"; // Ganti dengan nama database Anda
 
-// Check connection
-if (mysqli_connect_errno()){
-	echo "Koneksi database gagal : " . mysqli_connect_error();
+// Membuat koneksi
+$koneksi = mysqli_connect($host, $user, $password, $database);
+
+// Memeriksa koneksi
+if (!$koneksi) {
+    die("Koneksi gagal: " . mysqli_connect_error());
 }
-// function query($query) {
-// 	global $koneksi;
-// 	$result = mysqli_query($koneksi, $query);
-// 	$row = [];
-// 	while( $row = mysqli_fetch_assoc($result)) {
-// 		$row[] = $row;
-// 	}
-// 	return $row;
-// }
-
-// function cari($key) {
-// 	$query = "SELECT * FROM pengaduan
-// 					WHERE
-// 				nama LIKE '%$key%'
-// 				";
-// 			return query($query);
-// }
 ?>

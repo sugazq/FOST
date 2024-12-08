@@ -2,91 +2,52 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register SiPeKa</title>
-
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
-    <link rel="icon" type="assets/dist/img/logo.png" href="assets/dist/img/logo.png">
-    <style>
-            body{
-                background-image: url('assets/dist/img/background.png');
-                background-repeat: no-repeat;
-                background-attachment: fixed ;
-                background-size: 100% 100%;
-            }
-        </style>
-    
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Pendaftaran FOST</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <!-- Favicons -->
+  <link href="assets/dist/img/logo1.png" rel="icon">
 </head>
 
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <!-- /.login-logo -->
-        <div class="card card-outline card-warning">
-            <div class="card-header text-center">
-                <a href="assets/index2.html" class="h1">Daftar</a>
-            </div>
-            <div class="card-body">
-                <p class="login-box-msg">Sistem Pengaduan Warga Informatika</p>
-
-                <form action="simpan_daftar.php" method="post">
-                    <div class="input-group mb-3">
-                        <input type="text" name="nim" class="form-control" placeholder="NIM" required>
-                        <div class="input-group-append">
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" name="nama" class="form-control" placeholder="Nama" required>
-                        <div class="input-group-append">
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" name="username" class="form-control" placeholder="Username" required>
-                        <div class="input-group-append">
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Password" required>
-                        <div class="input-group-append">
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" name="telp" class="form-control" placeholder="Telepon" required>
-                        <div class="input-group-append">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <a href="log.php" class="text-center">Sudah Punya Akun</a>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-warning btn-block">Daftar</button>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                </form>
-            </div>
-            <!-- /.card-body -->
+<body class="bg-gray-100 flex items-center justify-center min-h-screen" style="background-image: url('assets/dist/img/bglogin.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+    <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row items-center md:items-start">
+        <div class="w-full md:w-1/2 flex justify-center">
+            <img alt="" class="w-full max-w-sm" height="300" src="assets/dist/img/daftar.jpg" width="400"/>
         </div>
-        <!-- /.card -->
-    </div>
-    <!-- /.login-box -->
+        <div class="w-full md:w-1/2 mt-8 md:mt-0 md:ml-8">
+            <h2 class="text-2xl font-semibold text-gray-700">Daftar</h2>
+            <p class="text-gray-500 mb-6">Found Object Of Science and Technology</p>
 
-    <!-- jQuery -->
-    <script src="assets/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="assets/dist/js/adminlte.min.js"></script>
+            <form action="simpan_daftar.php" method="post" class="space-y-4">
+                <div>
+                    <label class="sr-only" for="nim">NIM</label>
+                    <input type="text" name="nim" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="nim" placeholder="NIM" required/>
+                </div>
+                <div>
+                    <label class="sr-only" for="nama">Nama</label>
+                    <input type="text" name="nama" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="nama" placeholder="Nama" required/>
+                </div>
+                <div>
+                    <label class="sr-only" for="username">Username</label>
+                    <input type="text" name="username" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="username" placeholder="Username" required/>
+                </div>
+                <div>
+                    <label class="sr-only" for="password">Password</label>
+                    <input type="password" name="password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="password" placeholder="Password" required/>
+                </div>
+                <div>
+                    <label class="sr-only" for="telp">Telepon</label>
+                    <input type="text" name="telp" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="telp" placeholder="Telepon" required/>
+                </div>
+                <div class="flex justify-between">
+                    <a href="log.php" class="text-blue-500 hover:underline">Sudah Punya Akun?</a>
+                    <button type="submit" class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Daftar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

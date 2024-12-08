@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register Sistem Pengaduan Warga Informatika</title>
+    <title>Register Sistem FOST</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -26,7 +26,7 @@
                 <a href="assets/index2.html" class="h1">Daftar</a>
             </div>
             <div class="card-body">
-                <p class="login-box-msg">Sistem Pengaduan Warga Informatika</p>
+                <p class="login-box-msg">Sistem FOST</p>
 
                 <form action="simpan_daftar_admin.php" method="post">
                     <input type="hidden" name="id_petugas" class="form-control" placeholder="id_petugas" required>

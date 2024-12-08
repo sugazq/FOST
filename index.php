@@ -1,208 +1,294 @@
+<?php
+include 'cek_akses.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>SiPeKa</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <title>FOST - Found Objects of Science and Technology</title>
+  <meta name="description" content="Lapor barang hilang dan temukan objek sains dan teknologi.">
+  <meta name="keywords" content="FOST, barang hilang, pengaduan, sains, teknologi">
 
   <!-- Favicons -->
-  <!-- <link href="assets1/img/favicon.png" rel="icon"> -->
-  <link href="assets1/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/dist/img/logo1.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets1/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets1/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets1/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="assets1/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets1/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets1/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <link href="assets1/css/main.css" rel="stylesheet">
-  <link rel="icon" type="assets/dist/img/logo.png" href="assets/dist/img/logo.png">
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    /* Pastikan header tidak membatasi tinggi */
+    .header {
+      height: auto;
+      /* Biarkan tinggi menyesuaikan konten */
+      padding: 10px 0;
+      /* Tambahkan padding agar konten tidak menempel */
+      overflow: visible;
+      /* Pastikan elemen di dalamnya tidak terpotong */
+    }
+
+    /* Sesuaikan logo */
+    .header .logo img {
+      height: 100px;
+      /* Tinggi logo yang diinginkan */
+      width: auto;
+      /* Jaga rasio aspek */
+      max-height: 100%;
+      /* Pastikan tidak lebih besar dari kontainer */
+    }
+
+    /* Pastikan navmenu tidak memengaruhi layout */
+    .navmenu {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: auto;
+      /* Biarkan menyesuaikan tinggi konten */
+    }
+
+    /* Responsive tweaks (opsional) */
+    @media (max-width: 768px) {
+      .header .logo img {
+        height: 100px;
+        /* Sesuaikan untuk layar kecil */
+      }
+    }
+
+    .info-item {
+      background-color: #f9f9f9;
+      /* Warna latar belakang */
+      border: 1px solid #ddd;
+      /* Border */
+      border-radius: 10px;
+      /* Sudut melengkung */
+      padding: 20px;
+      /* Jarak dalam */
+      margin: 10px;
+      /* Jarak antar elemen */
+      max-width: 300px;
+      /* Lebar maksimum */
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      /* Efek bayangan */
+    }
+  </style>
 </head>
 
-<body>
+<body class="index-page">
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="header d-flex align-items-center">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="index.html" class="logo d-flex align-items-center">
-        <h1>SiPeKa<span>.</span></h1>
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="assets/dist/img/logo1.png" alt="Logo">
+        <h1 class="sitename"></h1>
       </a>
 
-      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
-      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
-      <nav id="navbar" class="navbar">
+      <nav id="navmenu" class="navmenu">
         <ul>
+          <li><a href="#hero" class="active">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
           <li><a href="login.php">Admin</a></li>
         </ul>
-      </nav><!-- .navbar -->
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+
+      <a class="btn-getstarted" href="log.php">Masuk</a>
 
     </div>
-  </header><!-- End Header -->
+  </header>
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="hero">
+  <main class="main">
 
-    <div class="info d-flex align-items-center">
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+      <div class="hero-bg">
+        <img src="assets/img/hero-bg-light.webp" alt="">
+      </div>
+      <div class="container text-center">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <h1 data-aos="fade-up">Welcome to <span>FOST</span></h1>
+          <p data-aos="fade-up" data-aos-delay="100">Laporkan barang hilang anda dan temukan di FOST<br></p>
+          <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+            <a href="log.php" class="btn-get-started">Mulai</a>
+          </div>
+          <img src="assets/img/hero-services-img.webp" class="img-fluid hero-img" alt="" data-aos="zoom-out" data-aos-delay="300">
+        </div>
+      </div>
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
       <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-6 text-center">
-            <h2 data-aos="fade-down">Welcome to <span>SiPeKa</span></h2>
-            <p data-aos="fade-up">Ajukan Masalah Mu</p>
-            <a data-aos="fade-up" data-aos-delay="200" href="log.php" class="btn-get-started">Di Sini</a>
+        <div class="row gy-4">
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+            <p class="who-we-are">Siapa Kami</p>
+            <h3>FOST - Found Objects of Science and Technology</h3>
+            <p class="fst-italic">
+              Kami adalah platform untuk membantu Anda melaporkan barang hilang maupun melaporkan penemuan barang hilang di sains dan teknologi.
+            </p>
+            <ul>
+              <li><i class="bi bi-check-circle"></i> <span>Pengaduan barang hilang yang mudah dan cepat.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Temukan objek yang hilang dengan bantuan komunitas.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Langsung laporkan dengan penemuan maupun kehilangan dengan fitur WA.</span></li>
+            </ul>
+            <!--<a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>-->
+          </div>
+
+          <div class="col-lg-6 about-images" data-aos="fade-up" data-aos-delay="200">
+            <div class="row gy-4">
+              <div class="col-lg-6">
+                <img src="assets/dist/img/fstdepan.jpg" class="img-fluid" alt="">
+              </div>
+              <div class="col-lg-6">
+                <div class="row gy-4">
+                  <div class="col-lg-12">
+                    <img src="assets/dist/img/parkiran.jpg" class="img-fluid" alt="">
+                  </div>
+                  <div class="col-lg-12">
+                    <img src="assets/dist/img/tengahfst.jpg" class="img-fluid" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section><!-- /About Section -->
 
-    <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Hubungi Kami</h2>
+        <p>Jika Anda memiliki pertanyaan atau ingin melaporkan bug silahkan hubungi kami.</p>
+      </div><!-- End Section Title -->
 
-      <div class="carousel-item active" style="background-image: url(assets1/img/sendiri/4.jpeg)"></div>
-      <div class="carousel-item" style="background-image: url(assets1/img/sendiri/1.jpg)"></div>
-      <div class="carousel-item" style="background-image: url(assets1/img/sendiri/2.jpeg)"></div>
-      <div class="carousel-item" style="background-image: url(assets1/img/sendiri/3.jpg)"></div>
-
-      <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
-      </a>
-
-      <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
-        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-      </a>
-
-    </div>
-
-  </section><!-- End Hero Section -->
-
-  <main id="main">
-
-    <!-- ======= Constructions Section ======= -->
-    <section id="constructions" class="constructions">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-header">
-          <h2>About</h2>
-          <p>Nulla dolorum nulla nesciunt rerum facere sed ut inventore quam porro nihil id ratione ea sunt quis dolorem dolore earum</p>
-        </div>
-
-        <div class="row gy-4">
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="card-item">
-              <div class="row">
-                <div class="col-xl-5">
-                  <div class="card-bg" style="background-image: url(assets1/img/sendiri/4.jpeg);"></div>
-                </div>
-                <div class="col-xl-7 d-flex align-items-center">
-                  <div class="card-body">
-                    <h4 class="card-title">Eligendi omnis sunt veritatis.</h4>
-                    <p>Fuga in dolorum et iste et culpa. Commodi possimus nesciunt modi voluptatem placeat deleniti adipisci. Cum delectus doloribus non veritatis. Officia temporibus illo magnam. Dolor eos et.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Card Item -->
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="card-item">
-              <div class="row">
-                <div class="col-xl-5">
-                  <div class="card-bg" style="background-image: url(assets1/img/sendiri/1.jpg);"></div>
-                </div>
-                <div class="col-xl-7 d-flex align-items-center">
-                  <div class="card-body">
-                    <h4 class="card-title">Possimus ut sed velit assumenda</h4>
-                    <p>Sunt deserunt maiores voluptatem autem est rerum perferendis rerum blanditiis. Est laboriosam qui iste numquam laboriosam voluptatem architecto. Est laudantium sunt at quas aut hic. Eum dignissimos.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Card Item -->
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="card-item">
-              <div class="row">
-                <div class="col-xl-5">
-                  <div class="card-bg" style="background-image: url(assets1/img/sendiri/2.jpeg);"></div>
-                </div>
-                <div class="col-xl-7 d-flex align-items-center">
-                  <div class="card-body">
-                    <h4 class="card-title">Error beatae dolor inventore aut</h4>
-                    <p>Dicta porro nobis. Velit cum in. Nesciunt dignissimos enim molestiae facilis numquam quae quaerat ipsam omnis. Neque debitis ipsum at architecto officia laboriosam odit. Ut sunt temporibus nulla culpa.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Card Item -->
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="card-item">
-              <div class="row">
-                <div class="col-xl-5">
-                  <div class="card-bg" style="background-image: url(assets1/img/sendiri/3.jpg);"></div>
-                </div>
-                <div class="col-xl-7 d-flex align-items-center">
-                  <div class="card-body">
-                    <h4 class="card-title">Expedita voluptas ut ut nesciunt</h4>
-                    <p>Aut est quidem doloremque voluptatem magnam quis excepturi vero quia. Eum eos doloremque architecto illo at beatae dolore. Fugiat suscipit et sint ratione dolores. Aut aliquid ea dolores libero nobis.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Card Item -->
-
-        </div>
-
-      </div>
-    </section><!-- End Constructions Section -->
-  </main><!-- End #main -->
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="footer-legal text-center position-relative">
       <div class="container">
-        <div class="copyright">
-          &copy; Copyright <strong><span>Dare?</span></strong>. SiPeKa
+        <div class="row g-4 justify-content-center">
+          <div class="col-lg-4 col-md-6 info-item text-center">
+            <i class="bi bi-geo-alt fs-1 mb-3 d-block mx-auto"></i>
+            <h3>Alamat</h3>
+            <p>Jl. A.H. Nasution No. 105 Cibiru Kota Bandung 40614
+              Jawa Barat – Indonesia</p>
+          </div>
+          <div class="col-lg-4 col-md-6 info-item text-center">
+            <i class="bi bi-telephone fs-1 mb-3 d-block mx-auto"></i>
+            <h3>Call Us</h3>
+            <p>(022)7800525</p>
+          </div>
+          <div class="col-lg-4 col-md-6 info-item text-center">
+            <i class="bi bi-envelope fs-1 mb-3 d-block mx-auto"></i>
+            <h3>Email Kami</h3>
+            <p>fst@uinsgd.ac.id</p>
+          </div>
         </div>
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/upconstruction-bootstrap-construction-website-template/ -->
-          Designed by <a href="https://bootstrapmade.com/">localhost</a>
+      </div>
+
+
+
+      <!-- End Info Item -->
+      </div>
+      </div>
+    </section><!-- /Contact Section -->
+
+  </main>
+
+  <footer id="footer" class="footer position-relative light-background">
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <!-- Footer About -->
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center mb-3">
+            <span class="sitename">FOST</span>
+          </a>
+          <div class="footer-contact">
+            <p>Fakultas Sains dan Teknologi</p>
+            <p>Jl. A.H. Nasution No. 105 Cibiru Kota Bandung 40614<br>Jawa Barat – Indonesia</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>(022)7800525</span></p>
+            <p><strong>Email:</strong> <span>fst@uinsgd.ac.id</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <!--<a href="" class="d-flex justify-content-center align-items-center me-3">
+            <i class="bi bi-twitter-x">Belum Tersedia</i>
+          </a>
+          <a href="" class="d-flex justify-content-center align-items-center me-3">
+            <i class="bi bi-facebook">Belum Tersedia</i>
+          </a>-->
+            <a href="https://www.instagram.com/fst.uinbandung/profilecard/?igsh=NHIzdmg0dWQzZDh1" class="d-flex justify-content-center align-items-center">
+              <i class="bi bi-instagram"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Useful Links -->
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Tautan Pembantu</h4>
+          <ul class="list-unstyled">
+            <li><a href="#hero">Beranda</a></li>
+            <li><a href="#about">Tentang Kami</a></li>
+            <li><a href="#contact">Kontak Kami</a></li>
+            <li><a href="login.php">Admin</a></li>
+          </ul>
+        </div>
+
+        <!-- Our Services -->
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Layanan Kami</h4>
+          <ul class="list-unstyled">
+            <li><a href="#">Melaporkan barang hilang atau menemukan barang hilang</a></li>
+            <li><a href="#">Mencari barang hilang</a></li>
+            <li><a href="#">Didukung Komunitas</a></li>
+            <li><a href="#">Terbaru</a></li>
+          </ul>
+        </div>
+
+        <!-- Additional Logo/Content -->
+        <div class="col-lg-4 col-md-6 footer-logo text-center">
+          <img src="assets/dist/img/logo1.png" alt="FOST Logo" class="img-fluid mb-3" style="max-width: 150px;">
+          <p class="mt-2">Mendukung pelaporan dan pencarian barang hilang untuk komunitas kami.</p>
         </div>
       </div>
     </div>
 
+    <!-- Footer Copyright -->
+    <div class="container text-center mt-4">
+      <p>© <strong class="sitename">FOST</strong> All Rights Reserved</p>
+      <div class="credits">
+        Designed by <a href="https://github.com/sugazq">riramwp</a>
+      </div>
+    </div>
   </footer>
-  <!-- End Footer -->
 
-  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
   <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
-  <script src="assets1/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets1/vendor/aos/aos.js"></script>
-  <script src="assets1/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets1/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets1/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets1/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets1/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Template Main JS File -->
-  <script src="assets1/js/main.js"></script>
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
 
 </body>
 
