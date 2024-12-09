@@ -12,7 +12,7 @@ if ($_SESSION['level'] == "") {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Data Pengaduan | SiPeKa</title>
+    <title>Data Laporan | FOST</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -22,7 +22,7 @@ if ($_SESSION['level'] == "") {
     <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="icon" type="image/png" href="../assets/dist/img/logo.png">
+    <link rel="icon" type="image/png" href="../assets/dist/img/logo1.jpg">
     <style>
     body {
       font-family: 'Roboto', sans-serif;
@@ -159,11 +159,11 @@ if ($_SESSION['level'] == "") {
                         <a href="beranda.php" class="nav-link">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a href="data_pengaduan.php" class="nav-link">Data Pengaduan</a>
+                        <a href="data_pengaduan.php" class="nav-link">Data Laporan</a>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a href="laporan.php" class="nav-link">Generate Laporan</a>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
 
@@ -183,7 +183,7 @@ if ($_SESSION['level'] == "") {
             <div class="container">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 gradient-text">Data Laporan Mahasiswa</h1>
+                        <h1 class="m-0 gradient-text">Data Laporan</h1>
                     </div>
                 </div>
             </div>
@@ -193,9 +193,43 @@ if ($_SESSION['level'] == "") {
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
+                        <!-- Form Pencarian dan Filter -->
+                        <form method="get" action="data_pengaduan.php">
+                            <div class="form-row mb-3">
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name="cari" placeholder="Cari laporan..." value="<?php echo isset($_GET['cari']) ? $_GET['cari'] : ''; ?>">
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control" name="kategori">
+                                        <option value="">Pilih Kategori</option>
+                                        <option value="Kendaraan" <?php echo (isset($_GET['kategori']) && $_GET['kategori'] == 'Kendaraan') ? 'selected' : ''; ?>>Kendaraan</option <option value="Perhiasan" <?php echo (isset($_GET['kategori']) && $_GET['kategori'] == 'Perhiasan') ? 'selected' : ''; ?>>Perhiasan</option>
+                                        <option value="Elektronik" <?php echo (isset($_GET['kategori']) && $_GET['kategori'] == 'Elektronik') ? 'selected' : ''; ?>>Elektronik</option>
+                                        <option value="Dokumen" <?php echo (isset($_GET['kategori']) && $_GET['kategori'] == 'Dokumen') ? 'selected' : ''; ?>>Dokumen</option>
+                                        <option value="Aksesoris" <?php echo (isset($_GET['kategori']) && $_GET['kategori'] == 'Aksesoris') ? 'selected' : ''; ?>>Aksesoris</option>
+                                        <option value="Pakaian" <?php echo (isset($_GET['kategori']) && $_GET['kategori'] == 'Pakaian') ? 'selected' : ''; ?>>Pakaian</option>
+                                        <option value="Barang Anak" <?php echo (isset($_GET['kategori']) && $_GET['kategori'] == 'Barang Anak') ? 'selected' : ''; ?>>Barang Anak</option>
+                                        <option value="Peralatan" <?php echo (isset($_GET['kategori']) && $_GET['kategori'] == 'Peralatan') ? 'selected' : ''; ?>>Peralatan</option>
+                                        <option value="Buku/Media" <?php echo (isset($_GET['kategori']) && $_GET['kategori'] == 'Buku/Media') ? 'selected' : ''; ?>>Buku/Media</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control" name="jenis">
+                                        <option value="">Pilih Jenis Laporan</option>
+                                        <option value="Kehilangan" <?php echo (isset($_GET['jenis']) && $_GET['jenis'] == 'Kehilangan') ? 'selected' : ''; ?>>Kehilangan</option>
+                                        <option value="Menemukan" <?php echo (isset($_GET['jenis']) && $_GET['jenis'] == 'Menemukan') ? 'selected' : ''; ?>>Menemukan</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        <i class="fas fa-search"></i> Cari
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
                         <div class="card card-primary card-outline">
                             <div class="card-header">
-                                <h5 class="card-title m-0">Laporan</h5>
+                                <h5 class="card-title m-0">Data Laporan</h5>
                             </div>
                             <div class="card-body">
                                 <div style="max-height: 400px; overflow-y: auto;">
@@ -204,8 +238,8 @@ if ($_SESSION['level'] == "") {
                                             <tr>
                                                 <th style="width: 10px">No</th>
                                                 <th style="width: 100px">Foto</th>
-                                                <th style="width: 200px">Tanggal Pengaduan</th>
-                                                <th>Isi L aporan</th>
+                                                <th style="width: 200px">Tanggal Laporan</th>
+                                                <th>Isi Laporan</th>
                                                 <th>Lokasi</th>
                                                 <th>Username</th>
                                                 <th>Jenis Laporan</th>
@@ -217,15 +251,35 @@ if ($_SESSION['level'] == "") {
                                             <?php
                                             $no = 1;
                                             include "../koneksi.php";
-                                            $query = "SELECT * FROM pengaduan ORDER BY tgl_pengaduan DESC";
+                                            $kategori = isset($_GET['kategori']) ? $_GET['kategori'] : '';
+                                            $jenis = isset($_GET['jenis']) ? $_GET['jenis'] : '';
+                                            $cari = isset($_GET['cari']) ? $_GET['cari'] : '';
+
+                                            $query = "SELECT * FROM pengaduan WHERE 1=1";
+
+                                            if ($kategori != '') {
+                                                $query .= " AND kategori LIKE '%$kategori%'";
+                                            }
+
+                                            if ($jenis != '') {
+                                                $query .= " AND jenis LIKE '%$jenis%'";
+                                            }
+
+                                            if ($cari != '') {
+                                                $query .= " AND (isi_laporan LIKE '%$cari%' OR lokasi LIKE '%$cari%')";
+                                            }
+
                                             $result = mysqli_query($koneksi, $query);
                                             while ($row = mysqli_fetch_assoc($result)) { ?>
                                                 <tr>
                                                     <td><?php echo $no++; ?></td>
-                                                    <?php if (!empty($row['foto']) && file_exists('../upload/' . $row['foto'])) {
-                                                        echo "<td><img src='../upload/" . $row['foto'] . "' alt='Foto' style='width: 100px; height: auto;'></td>";
+                                                    <?php 
+                                                    $fotoPath = '../upload/' . $row['foto'];
+                                                    if (!empty($row['foto']) && file_exists($fotoPath)) {
+                                                        echo "<td><img src='$fotoPath' alt='Foto' style='width: 100px; height: auto;'></td>";
                                                     } else {
                                                         echo "<td>Tidak ada foto</td>";
+                                                        echo "<td>Path: $fotoPath</td>"; // Debugging line
                                                     } ?>
                                                     <td><?php echo $row['tgl_pengaduan']; ?></td>
                                                     <td><?php echo $row['isi_laporan']; ?></td>

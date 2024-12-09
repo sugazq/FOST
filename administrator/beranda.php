@@ -29,7 +29,7 @@ $total_monthly_reports = $total_monthly_data['total_monthly_reports'];
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard Admin | Pengaduan Masyarakat</title>
+  <title>Dashboard Admin | Laporan Mahasiswa</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="../assets/plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
@@ -171,7 +171,7 @@ $total_monthly_reports = $total_monthly_data['total_monthly_reports'];
               <a href="beranda.php" class="nav-link">Beranda</a>
             </li>  
           <li class="nav-item">
-              <a href="data_pengaduan.php" class="nav-link">Data Pengaduan</a>
+              <a href="data_pengaduan.php" class="nav-link">Data Laporan</a>
             </li>
             <!--<li class="nav-item">
               <a href="data_tanggapan.php" class="nav-link">Data Tanggapan</a>

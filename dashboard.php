@@ -289,7 +289,9 @@ $total_monthly_reports = $total_monthly_data['total_monthly_reports'];
         </div>
 
         <footer class="main-footer">
-            <strong>&copy; 2024 RIRAMWP. All rights reserved.</strong>
+            <div class="float-right d-none d-sm-inline">
+            </div>
+            <strong>Copyright &copy; <a href="https://github.com/sugazq">riramwp</a>.</strong> All rights reserved.
         </footer>
 
     </div>

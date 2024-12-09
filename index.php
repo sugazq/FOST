@@ -50,22 +50,6 @@ include 'cek_akses.php';
       /* Pastikan tidak lebih besar dari kontainer */
     }
 
-    /* Pastikan navmenu tidak memengaruhi layout */
-    .navmenu {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: auto;
-      /* Biarkan menyesuaikan tinggi konten */
-    }
-
-    /* Responsive tweaks (opsional) */
-    @media (max-width: 768px) {
-      .header .logo img {
-        height: 100px;
-        /* Sesuaikan untuk layar kecil */
-      }
-    }
 
     .info-item {
       background-color: #f9f9f9;
@@ -82,6 +66,50 @@ include 'cek_akses.php';
       /* Lebar maksimum */
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
       /* Efek bayangan */
+    }
+
+    /* Untuk layar kecil (HP atau tablet) */
+    /* Untuk layar kecil (HP atau tablet) */
+    /* Untuk layar kecil (HP atau tablet) */
+    /* Untuk layar kecil (HP atau tablet) */
+    @media (max-width: 768px) {
+      .navmenu ul {
+        display: none;
+        /* Sembunyikan menu di layar kecil */
+        flex-direction: column;
+        background-color: white;
+        position: absolute;
+        top: 60px;
+        width: 100%;
+        z-index: 999;
+      }
+
+      .navmenu ul.active {
+        display: block;
+        /* Tampilkan menu saat kelas 'active' ditambahkan */
+      }
+
+      .navmenu i.mobile-nav-toggle {
+        display: block;
+        /* Tampilkan tombol burger */
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+    }
+
+    /* Untuk layar besar (Laptop/PC) */
+    @media (min-width: 769px) {
+      .navmenu ul {
+        display: flex;
+        /* Atur menu horizontal */
+        flex-direction: row;
+        position: static;
+      }
+
+      .navmenu i.mobile-nav-toggle {
+        display: none;
+        /* Sembunyikan tombol burger pada layar besar */
+      }
     }
   </style>
 </head>
@@ -125,6 +153,7 @@ include 'cek_akses.php';
           <p data-aos="fade-up" data-aos-delay="100">Laporkan barang hilang anda dan temukan di FOST<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
             <a href="log.php" class="btn-get-started">Mulai</a>
+            <a href="assets/dist/img/promosi.mp4" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Tonton Vidio</span></a>
           </div>
           <img src="assets/img/hero-services-img.webp" class="img-fluid hero-img" alt="" data-aos="zoom-out" data-aos-delay="300">
         </div>
@@ -146,7 +175,6 @@ include 'cek_akses.php';
               <li><i class="bi bi-check-circle"></i> <span>Temukan objek yang hilang dengan bantuan komunitas.</span></li>
               <li><i class="bi bi-check-circle"></i> <span>Langsung laporkan dengan penemuan maupun kehilangan dengan fitur WA.</span></li>
             </ul>
-            <!--<a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>-->
           </div>
 
           <div class="col-lg-6 about-images" data-aos="fade-up" data-aos-delay="200">
@@ -268,7 +296,7 @@ include 'cek_akses.php';
     <div class="container text-center mt-4">
       <p>© <strong class="sitename">FOST</strong> All Rights Reserved</p>
       <div class="credits">
-        Designed by <a href="https://github.com/sugazq">riramwp</a>
+        Designed by <a href="https://github.com/sugazq">fostretrieve</a>
       </div>
     </div>
   </footer>
@@ -289,6 +317,32 @@ include 'cek_akses.php';
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+      const navMenu = document.querySelector('.navmenu ul');
+
+      // Fungsi untuk menangani perubahan ukuran layar
+      function handleResize() {
+        if (window.innerWidth > 768) {
+          navMenu.classList.remove('active'); // Hapus kelas 'active' di layar besar
+        } else {
+          navMenu.classList.remove('active'); // Pastikan menu disembunyikan di layar kecil
+        }
+      }
+
+      // Toggle menu saat tombol burger diklik
+      mobileNavToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('active'); // Toggle kelas 'active' pada menu
+      });
+
+      // Panggil handleResize pada saat window di-resize
+      window.addEventListener('resize', handleResize);
+
+      // Panggil sekali saat halaman pertama kali dimuat untuk set menu sesuai ukuran layar
+      handleResize();
+    });
+  </script>
 
 </body>
 

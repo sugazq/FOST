@@ -41,16 +41,16 @@ $username = $_SESSION['username'];
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SiPeKa</title>
+    <title>FOST</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Favicons -->
-  <link href="assets/dist/img/logo1.png" rel="icon">
+    <link href="assets/dist/img/logo1.png" rel="icon">
 
-<style>
-     body {
+    <style>
+        body {
             font-family: 'Roboto', sans-serif;
         }
 
@@ -83,7 +83,10 @@ $username = $_SESSION['username'];
             transition: color 0.3s ease;
         }
 
-
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
 
 
         .gradient-text {
@@ -107,7 +110,7 @@ $username = $_SESSION['username'];
             /* Warna biru */
             transition: all 0.3s ease;
         }
-</style>
+    </style>
 
 </head>
 
@@ -211,61 +214,50 @@ $username = $_SESSION['username'];
                                     <h5 class="card-title m-0">Data Pengaduan</h5>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table table-secondary table-striped">
-                                        <thead class="table-primary text-center">
-                                            <tr>
-                                                <th style="width: 10px">No</th>
-                                                <th style="width: 100px">Foto</th>
-                                                <th style="width: 200px">Tanggal Pengaduan</th>
-                                                <th>Isi Laporan</th>
-                                                <th>Lokasi</th>
-                                                <th>Username</th>
-                                                <th>Jenis Laporan</th>
-                                                <th>Kategori</th> <!-- Tambahkan kolom Kategori -->
-                                                <th style="width: 100px">Aksi</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody class="text-center">
-                                            <?php
-                                            $no = 1;
-                                            while ($row = mysqli_fetch_assoc($result)) { ?>
+                                    <div style="max-height: 400px; overflow-y: auto;"> <!-- Set a max height and enable vertical scrolling -->
+                                        <table class="table table-secondary table-striped">
+                                            <thead class="table-primary text-center">
                                                 <tr>
-                                                    <td><?php echo $no++; ?></td>
-                                                    <?php if (!empty($row['foto']) && file_exists('upload/' . $row['foto'])) {
-                                                        echo "<td><img src='upload/" . $row['foto'] . "' alt='Foto' style='width: 100px; height: auto;'></td>";
-                                                    } else {
-                                                        echo "<td>Tidak ada foto</td>";
-                                                    } ?>
-                                                    <td><?php echo $row['tgl_pengaduan']; ?></td>
-                                                    <td><?php echo $row['isi_laporan']; ?></td>
-                                                    <td><?php echo $row['lokasi']; ?></td>
-                                                    <td><?php echo $row['username']; ?></td>
-                                                    <td><?php echo $row['jenis']; ?></td>
-                                                    <td><?php echo isset($row['kategori']) ? $row['kategori'] : 'Kategori Tidak Tersedia'; ?></td>
-                                                    <td>
-                                                        <!-- Tombol Menanggapi (Link ke WhatsApp) -->
-                                                        <a href="https://wa.me/<?php echo '+62' . substr($row['tlpn'], 1); ?>" class="btn btn-success btn-sm" target="_blank">
-                                                            <i class="fab fa-whatsapp"></i> Chat
-                                                        </a>
-
-                                                        <!-- <form method="POST" action="tanggapan_pengaduan.php?id_pengaduan=<?php echo $id_pengaduan; ?>">
-                                                            <textarea class="form-control" name="tanggapan" required></textarea>
-                                                            <select class="form-control" name="status">
-                                                                <option value="menunggu">Menunggu</option>
-                                                                <option value="proses">Proses</option>
-                                                                <option value="selesai">Selesai</option>
-                                                            </select>
-                                                            <button type="submit" class="btn btn-success mt-2" name="submit_tanggapan">Kirim Tanggapan</button>
-                                                        </form> -->
-
-
-
-                                                    </td>
+                                                    <th style="width: 10px">No</th>
+                                                    <th style="width: 100px">Foto</th>
+                                                    <th style="width: 200px">Tanggal Pengaduan</th>
+                                                    <th>Isi Laporan</th>
+                                                    <th>Lokasi</th>
+                                                    <th>Username</th>
+                                                    <th>Jenis Laporan</th>
+                                                    <th>Kategori</th> <!-- Tambahkan kolom Kategori -->
+                                                    <th style="width: 100px">Aksi</th>
                                                 </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+
+                                            <tbody class="text-center">
+                                                <?php
+                                                $no = 1;
+                                                while ($row = mysqli_fetch_assoc($result)) { ?>
+                                                    <tr>
+                                                        <td><?php echo $no++; ?></td>
+                                                        <?php if (!empty($row['foto']) && file_exists('upload/' . $row['foto'])) {
+                                                            echo "<td><img src='upload/" . $row['foto'] . "' alt='Foto' style='width: 100px; height: auto;'></td>";
+                                                        } else {
+                                                            echo "<td>Tidak ada foto</td>";
+                                                        } ?>
+                                                        <td><?php echo $row['tgl_pengaduan']; ?></td>
+                                                        <td><?php echo $row['isi_laporan']; ?></td>
+                                                        <td><?php echo $row['lokasi']; ?></td>
+                                                        <td><?php echo $row['username']; ?></td>
+                                                        <td><?php echo $row['jenis']; ?></td>
+                                                        <td><?php echo isset($row['kategori']) ? $row['kategori'] : 'Kategori Tidak Tersedia'; ?></td>
+                                                        <td>
+                                                            <!-- Tombol Menanggapi (Link ke WhatsApp) -->
+                                                            <a href="https://wa.me/<?php echo '+62' . substr($row['tlpn'], 1); ?>" class="btn btn-success btn-sm" target="_blank">
+                                                                <i class="fab fa-whatsapp"></i> Chat
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -277,7 +269,7 @@ $username = $_SESSION['username'];
         <footer class="main-footer">
             <div class="float-right d-none d-sm-inline">
             </div>
-            <strong>Copyright &copy; <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; <a href="https://github.com/sugazq">riramwp</a>.</strong> All rights reserved.
         </footer>
     </div>
 
