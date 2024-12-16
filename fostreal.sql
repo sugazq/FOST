@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 09, 2024 at 06:51 AM
+-- Generation Time: Dec 16, 2024 at 03:39 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.26
 
@@ -41,6 +41,7 @@ CREATE TABLE `mahasiswa` (
 
 INSERT INTO `mahasiswa` (`nim`, `nama`, `username`, `password`, `tlpn`) VALUES
 ('123', 'Aina', 'N', 'd79c8788088c2193f0244d8f1f36d2db', '123'),
+('1237050001', 'ridho ahmad saputra', 'xion', 'a26132066568c76e57a5356816c66c0d', '082380726786'),
 ('1237050004', 'dione', 'dione', '785b1acb864ea0134efa806b8702482c', '085840952151'),
 ('1237050009', 'rizal', 'jalu', '0b0176c84dfb4641757bd0ec6f068d8c', '085295081643'),
 ('123705001', 'romi', 'romi', '910b6c78a8482033b971116f02441ce4', '085840952151'),
@@ -88,9 +89,10 @@ INSERT INTO `pengaduan` (`id_pengaduan`, `tgl_pengaduan`, `nim`, `isi_laporan`, 
 (41, '2024-12-08 20:00:01', '1237050009', 'telah hilang cincin emas 2 pasang terakhir kali ingat di parkiran syarkum', '446-cincin.jpeg', 'menunggu', 'Kehilangan', 'parkiran kujang', NULL, 'jalu', 'Perhiasan', NULL, NULL),
 (42, '2024-12-08 21:25:24', '1237050031', 'menemukan uang 100rb 5 lembar', '567-uang.jpeg', 'menunggu', 'Menemukan', 'lt 4.12', NULL, 'agus', 'Perhiasan', NULL, NULL),
 (46, '2024-12-09 07:39:38', '1237050031', 'menemukan jam tangan bermerek martin warna hitam dengan stiker dibelakang bertuliskan sasageyo', '704-jam.jpeg', 'menunggu', 'Menemukan', 'lt 1.12', NULL, 'agus', 'Aksesoris', NULL, NULL),
-(48, '2024-12-09 09:26:28', '1237050031', 'menemukan casan bertipe C warna putih dengan merek xiaomi', '836-casan.jpeg', 'menunggu', 'Menemukan', 'lt 4.12', NULL, 'agus', 'Elektronik', NULL, NULL),
-(49, '2024-12-09 09:53:07', '1237050031', 'Kehilangan motor beat jenis karbu warna hitam dengan stiker Gundam didepan dan juga motif joknya seperti sarang laba laba spiderman', '22-prev-desktop_kelebihan-dan-kekurangan-honda-beat-karbu-awal-mula-matic-sejuta-umat-terlaris-di-indonesia-135596_000000695531_2afc51fd_a205_4779_ab0e_25deee9bdc38.jpg', 'menunggu', 'Kehilangan', 'Parkiran Kujang', NULL, 'agus', 'Kendaraan', NULL, NULL),
-(51, '2024-12-09 13:17:26', '1237050031', 'saya menemukan jam tangan hitam', '747-7c0f14be6bcec5526a4396835fc25add.jpg', 'menunggu', 'Menemukan', 'lt  2.13', NULL, 'agus', 'Aksesoris', NULL, NULL);
+(48, '2024-12-09 09:26:28', '1237050031', 'menemukan casan bertipe C warna putih dengan merek xiaomi', '60-casan.jpeg', 'menunggu', 'Menemukan', 'lt 4.12', NULL, 'agus', 'Elektronik', NULL, NULL),
+(49, '2024-12-09 09:53:07', '1237050031', 'Kehilangan motor beat jenis karbu warna hitam dengan stiker Gundam didepan dan juga motif joknya seperti sarang laba laba spiderman', '199-beat.jpeg', 'menunggu', 'Kehilangan', 'Parkiran Kujang', NULL, 'agus', 'Kendaraan', NULL, NULL),
+(51, '2024-12-09 13:17:26', '1237050031', 'saya menemukan jam tangan hitam', '866-jam.jpeg', 'menunggu', 'Menemukan', 'lt  2.13', NULL, 'agus', 'Aksesoris', NULL, NULL),
+(55, '2024-12-16 10:33:54', '1237050001', 'kehilangan speaker merek thinkpluss warna hitam dengan gantungan spongebob dan stiker anime perempuan rambut biru', '677-speaker.jpeg', 'proses', 'Kehilangan', 'lt 4.12', NULL, 'xion', 'Elektronik', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -114,6 +116,32 @@ CREATE TABLE `petugas` (
 INSERT INTO `petugas` (`id_petugas`, `nama_petugas`, `username`, `password`, `telp`, `level`) VALUES
 (1, 'Ahmad', 'admin', '21232f297a57a5a743894a0e4a801fc3', '08583253653', 'admin'),
 (2, 'Asep', 'petugas', 'afb91ef692fd08c445e8cb1bab2ccf9c', '08583253653', 'petugas');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `riwayat`
+--
+
+CREATE TABLE `riwayat` (
+  `id_riwayat` int NOT NULL,
+  `nim` varchar(20) NOT NULL,
+  `isi_laporan` text NOT NULL,
+  `lokasi` varchar(255) NOT NULL,
+  `jenis` varchar(50) NOT NULL,
+  `kategori` varchar(50) NOT NULL,
+  `tgl_pengaduan` datetime DEFAULT CURRENT_TIMESTAMP,
+  `foto` varchar(255) DEFAULT NULL,
+  `status` varchar(20) DEFAULT 'Selesai'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `riwayat`
+--
+
+INSERT INTO `riwayat` (`id_riwayat`, `nim`, `isi_laporan`, `lokasi`, `jenis`, `kategori`, `tgl_pengaduan`, `foto`, `status`) VALUES
+(1, '1237050031', 'asdasdas', 'dsadfasdas', 'Kehilangan', 'Perhiasan', '2024-12-16 10:15:47', '595-w.PNG', 'selesai'),
+(2, '1237050001', 'telah menemukan tumbler  warna hitam dengan tutup warna biru merek tupperware', 'lt  2.13', 'Menemukan', 'Peralatan', '2024-12-16 10:36:18', '914-tumbler.jpeg', 'selesai');
 
 -- --------------------------------------------------------
 
@@ -179,6 +207,12 @@ ALTER TABLE `petugas`
   ADD PRIMARY KEY (`id_petugas`);
 
 --
+-- Indexes for table `riwayat`
+--
+ALTER TABLE `riwayat`
+  ADD PRIMARY KEY (`id_riwayat`);
+
+--
 -- Indexes for table `tanggapan`
 --
 ALTER TABLE `tanggapan`
@@ -200,13 +234,19 @@ ALTER TABLE `tanggapan_pengaduan`
 -- AUTO_INCREMENT for table `pengaduan`
 --
 ALTER TABLE `pengaduan`
-  MODIFY `id_pengaduan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id_pengaduan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `petugas`
 --
 ALTER TABLE `petugas`
   MODIFY `id_petugas` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `riwayat`
+--
+ALTER TABLE `riwayat`
+  MODIFY `id_riwayat` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tanggapan`

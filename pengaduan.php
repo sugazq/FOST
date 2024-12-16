@@ -7,7 +7,7 @@ include 'koneksi.php'; // Pastikan Anda menghubungkan ke database
 
 $nim = $_SESSION['nim'];
 
-$query = "SELECT pengaduan.id_pengaduan, pengaduan.nim, mahasiswa.username, pengaduan.isi_laporan, pengaduan.foto, pengaduan.lokasi, pengaduan.tgl_pengaduan, pengaduan.jenis, pengaduan.kategori
+$query = "SELECT pengaduan.id_pengaduan, pengaduan.nim, mahasiswa.username, pengaduan.isi_laporan, pengaduan.foto, pengaduan.lokasi, pengaduan.tgl_pengaduan, pengaduan.jenis, pengaduan.kategori, pengaduan.status
           FROM pengaduan
           INNER JOIN mahasiswa ON pengaduan.nim = mahasiswa.nim
           WHERE pengaduan.nim = '$nim'";
@@ -18,11 +18,7 @@ if (!$result) {
     die("Query Error: " . mysqli_error($koneksi));
 }
 
-// Ambil NIM dan Username dari sesi
-$nim = $_SESSION['nim'];
 $username = $_SESSION['username'];
-
-$q = "SELECT * FROM pengaduan WHERE nim = '$nim' ORDER BY id_pengaduan DESC";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +31,6 @@ $q = "SELECT * FROM pengaduan WHERE nim = '$nim' ORDER BY id_pengaduan DESC";
     <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <!-- Favicons -->
     <link href="assets/dist/img/logo1.png" rel="icon">
     <style>
         body {
@@ -123,11 +118,8 @@ $q = "SELECT * FROM pengaduan WHERE nim = '$nim' ORDER BY id_pengaduan DESC";
                         <li class="nav-item">
                             <a href="pengaduan.php" class="nav-link">Tulis Pengaduan</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a href="tanggapan_pengaduan.php" class="nav-link">Tanggapan Pengaduan</a>
-                        </li> -->
                         <li class="nav-item">
-                            <a href="laporan.php" class="nav-link">Laporan Pengaduan</a>
+                            <a href="laporan.php" class=" nav-link">Laporan Pengaduan</a>
                         </li>
                     </ul>
                 </div>
@@ -147,13 +139,11 @@ $q = "SELECT * FROM pengaduan WHERE nim = '$nim' ORDER BY id_pengaduan DESC";
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 gradient-text" style="color: #007bff;">يٰٓاَيُّهَا الَّذِيْنَ اٰمَنُوا اتَّقُوا اللّٰهَ وَكُوْنُوْا مَعَ الصّٰدِقِيْنَ</h1>
+                        <h1 class="m-0 gradient-text" style="color: #007bff;">يٰٓاَيُّهَا الَّذِيْنَ اٰمَنُوا اتَّقُوا اللّٰهَ وَكُوْنُوْا مَعَ الصّٰدِقِيْنَ</h1>
                             <p class="gradient-text" style="color: #007bff; font-size: 12px;">
                                 Wahai orang-orang yang beriman, bertakwalah kepada Allah dan tetaplah bersama orang-orang yang benar!
                             </p>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -181,7 +171,8 @@ $q = "SELECT * FROM pengaduan WHERE nim = '$nim' ORDER BY id_pengaduan DESC";
                                                     <th>Lokasi</th>
                                                     <th>Username</th>
                                                     <th>Jenis Laporan</th>
-                                                    <th>Kategori</th> <!-- Menambahkan kategori -->
+                                                    <th>Kategori</th>
+                                                    <th>Status</th>
                                                     <th style="width: 100px">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -203,6 +194,7 @@ $q = "SELECT * FROM pengaduan WHERE nim = '$nim' ORDER BY id_pengaduan DESC";
                                                         <td><?php echo $row['username']; ?></td>
                                                         <td><?php echo $row['jenis']; ?></td>
                                                         <td><?php echo isset($row['kategori']) ? $row['kategori'] : 'Kategori Tidak Tersedia'; ?></td>
+                                                        <td><?php echo $row['status']; ?></td>
 
                                                         <td>
                                                             <a href="update_pengaduan.php" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-edit<?php echo $row['id_pengaduan']; ?>"><i class="fas fa-edit"></i></a>
@@ -258,6 +250,14 @@ $q = "SELECT * FROM pengaduan WHERE nim = '$nim' ORDER BY id_pengaduan DESC";
                                                                         </div>
 
                                                                         <div class="form-group">
+                                                                            <label>Status</label>
+                                                                            <select name="status" class="form-control" required>
+                                                                                <option value="Proses" <?php echo ($row['status'] == 'Proses') ? 'selected' : ''; ?>>Proses</option>
+                                                                                <option value="Selesai" <?php echo ($row['status'] == 'Selesai') ? 'selected' : ''; ?>>Selesai</option>
+                                                                            </select>
+                                                                        </div>
+
+                                                                        <div class="form-group">
                                                                             <label>Foto Lama</label><br>
                                                                             <?php if (!empty($row['foto']) && file_exists('upload/' . $row['foto'])): ?>
                                                                                 <img src="upload/<?php echo $row['foto']; ?>" alt="Gambar Laporan" style="width: 100px; height: auto;"><br>
@@ -278,8 +278,6 @@ $q = "SELECT * FROM pengaduan WHERE nim = '$nim' ORDER BY id_pengaduan DESC";
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                                 <?php } ?>
                                             </tbody>
                                         </table>
@@ -291,6 +289,7 @@ $q = "SELECT * FROM pengaduan WHERE nim = '$nim' ORDER BY id_pengaduan DESC";
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
+                                            <h ```php
                                             <h4 class="modal-title">Tambah Pengaduan</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -318,17 +317,15 @@ $q = "SELECT * FROM pengaduan WHERE nim = '$nim' ORDER BY id_pengaduan DESC";
                                                     <div class="form-group">
                                                         <label>Jenis</label>
                                                         <select name="jenis" class="form-control" required>
-                                                            <option value="">Pilih Jenis</option>
+                                                            <option value="">-- Pilih Jenis --</option>
                                                             <option value="Kehilangan">Kehilangan</option>
                                                             <option value="Menemukan">Menemukan</option>
                                                         </select>
                                                     </div>
-
-                                                    <!-- Tambahkan Kategori di sini -->
                                                     <div class="form-group">
                                                         <label>Kategori</label>
                                                         <select name="kategori" class="form-control" required>
-                                                            <option value="">Pilih Kategori</option>
+                                                            <option value="">-- Pilih Kategori --</option>
                                                             <option value="Kendaraan">Kendaraan</option>
                                                             <option value="Perhiasan">Perhiasan</option>
                                                             <option value="Elektronik">Elektronik</option>
@@ -340,43 +337,40 @@ $q = "SELECT * FROM pengaduan WHERE nim = '$nim' ORDER BY id_pengaduan DESC";
                                                             <option value="Buku/Media">Buku/Media</option>
                                                         </select>
                                                     </div>
-
                                                     <div class="form-group">
-                                                        <label for="exampleInputFile">Upload Foto</label>
-                                                        <div class="input-group">
-                                                            <div class="custom-file">
-                                                                <input type="file" name="foto" class="form-control" required>
-                                                            </div>
-                                                        </div>
+                                                        <label>Status</label>
+                                                        <select name="status" class="form-control" required>
+                                                            <option value="Proses">Proses</option>
+                                                            <option value="Selesai">Selesai</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Foto</label>
+                                                        <input type="file" name="foto" class="form-control" required>
                                                     </div>
                                                 </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Keluar</button>
+                                                    <button type="submit" class="btn btn-success">Simpan Pengaduan</button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Keluar</button>
-                                            <button type="submit" class="btn btn-warning">Simpan Pengaduan</button>
-                                        </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
             </div>
+
+            <footer class="main-footer">
+                <div class="float-right d-none d-sm-inline"></div>
+                <strong>Copyright &copy; <a href="https://github.com/sugazq">riramwp</a>.</strong> All rights reserved.
+            </footer>
         </div>
 
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-inline">
-            </div>
-            <strong>Copyright &copy; <a href="https://github.com/sugazq">riramwp</a>.</strong> All rights reserved.
-        </footer>
-    </div>
-
-    <script src="assets/plugins/jquery/jquery.min.js"></script>
-    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/dist/js/adminlte.min.js"></script>
-</body>
-
+        <script src="assets/plugins/jquery/jquery.min.js"></script>
+        <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/dist/js/adminlte.min.js"></script>
+    </body>
 </html>

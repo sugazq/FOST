@@ -1,12 +1,17 @@
 <?php
 include 'koneksi.php';
 
-// Ambil data dari form
+// Cek apakah id_pengaduan ada di POST
+if (!isset($_POST['id_pengaduan'])) {
+    die("ID Pengaduan tidak ditemukan.");
+}
+
 $id_pengaduan = $_POST['id_pengaduan'];
 $isi_laporan = $_POST['isi_laporan'];
 $lokasi = $_POST['lokasi'];
 $jenis = $_POST['jenis'];
 $kategori = $_POST['kategori'];  // Ambil kategori dari form
+$status = $_POST['status'];  // Ambil status dari form
 $foto = $_FILES['foto']['name'];  // Ambil foto yang diupload
 
 // Cek apakah ada foto baru yang diupload
@@ -42,13 +47,27 @@ if ($foto != "") {
     $nama_foto_baru = $data_foto_lama['foto'];  // Gunakan foto lama
 }
 
-// Update data pengaduan dengan kategori
-$query = "UPDATE pengaduan SET isi_laporan = '$isi_laporan', lokasi = '$lokasi', jenis = '$jenis', kategori = '$kategori', foto = '$nama_foto_baru' WHERE id_pengaduan = '$id_pengaduan'";
+// Update data pengaduan dengan kategori dan status
+$query = "UPDATE pengaduan SET isi_laporan = '$isi_laporan', lokasi = '$lokasi', jenis = '$jenis', kategori = '$kategori', status = '$status', foto = '$nama_foto_baru' WHERE id_pengaduan = '$id_pengaduan'";
 $result = mysqli_query($koneksi, $query);
 
 if ($result) {
-    echo "<script>alert('Pengaduan berhasil diperbarui!');window.location='pengaduan.php';</script>";
+    // Jika status adalah 'Selesai', pindahkan ke tabel riwayat
+    if ($status == 'Selesai') {
+        // Pindahkan data ke tabel riwayat
+        $query_riwayat = "INSERT INTO riwayat (nim, isi_laporan, lokasi, jenis, kategori, tgl_pengaduan, foto, status) 
+                          SELECT nim, isi_laporan, lokasi, jenis, kategori, tgl_pengaduan, foto, status 
+                          FROM pengaduan 
+                          WHERE id_pengaduan = '$id_pengaduan'";
+        mysqli_query($koneksi, $query_riwayat);
+
+        // Hapus pengaduan dari tabel pengaduan
+        $query_hapus = "DELETE FROM pengaduan WHERE id_pengaduan = '$id_pengaduan'";
+        mysqli_query($koneksi, $query_hapus);
+    }
+
+    echo "<script>alert('Data pengaduan berhasil diperbarui!');window.location='pengaduan.php';</script>";
 } else {
-    echo "Gagal memperbarui pengaduan.";
+    echo "<script>alert('Gagal memperbarui data pengaduan. Silakan coba lagi.');window.location='pengaduan.php';</script>";
 }
 ?>
