@@ -153,7 +153,9 @@ include 'cek_akses.php';
           <p data-aos="fade-up" data-aos-delay="100">Laporkan barang hilang anda dan temukan di FOST<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
             <a href="log.php" class="btn-get-started">Mulai</a>
-            <a href="assets/dist/img/promosi.mp4" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Tonton Vidio</span></a>
+            <a href="https://youtu.be/6BlmTpUbjNk" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Tonton Vidio</span>
+</a>
+
           </div>
           <img src="assets/img/hero-services-img.webp" class="img-fluid hero-img" alt="" data-aos="zoom-out" data-aos-delay="300">
         </div>
