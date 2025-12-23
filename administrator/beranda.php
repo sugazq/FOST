@@ -157,7 +157,7 @@ $total_monthly_reports = $total_monthly_data['total_monthly_reports'];
     <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
       <div class="container">
         <a href="" class="navbar-brand">
-          <img src="../assets/dist/img/logo.jpg" alt="FoSt Logo" class="brand-image img-circle elevation-3" style="opacity: .8; width: 75px; height: 75px;">
+          <img src="../assets/dist/img/logo.png" alt="FoSt Logo" class="brand-image img-circle elevation-3" style="opacity: .8; width: 75px; height: 75px;">
           <span class="brand-text font-weight-light"></span>
         </a>
 

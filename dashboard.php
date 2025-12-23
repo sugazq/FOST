@@ -38,7 +38,7 @@ $history_result = mysqli_query($koneksi, $query_history);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard | FoSt</title>
+    <title>Dashboard | FOST</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
@@ -115,7 +115,7 @@ $history_result = mysqli_query($koneksi, $query_history);
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
                 <a href="" class="navbar-brand">
-                    <img src="assets/dist/img/logo.jpg" alt="FoSt Logo" class="brand-image img-circle elevation-3" style="opacity: .8; width: 75px; height: 75px;">
+                    <img src="assets/dist/img/logo.png" alt="FoSt Logo" class="brand-image img-circle elevation-3" style="opacity: .8; width: 75px; height: 75px;">
                     <span class="brand-text font-weight-light"></span>
                 </a>
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="# navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -164,7 +164,7 @@ $history_result = mysqli_query($koneksi, $query_history);
                                     <h3 class="card-title">Selamat Datang, <?php echo $username; ?></h3>
                                 </div>
                                 <div class="card-body">
-                                    <p>Selamat datang Di Found Objects of Science and Technology! Berikut adalah statistik pengaduanmu:</p>
+                                    <p>Selamat datang Di Lost Find Sains Teknologi! Berikut adalah statistik pengaduanmu:</p>
                                 </div>
                             </div>
                         </div>

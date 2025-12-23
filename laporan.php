@@ -11,10 +11,24 @@ $jenis = isset($_GET['jenis']) ? $_GET['jenis'] : '';
 $cari = isset($_GET['cari']) ? $_GET['cari'] : '';
 
 // Query untuk mengambil data pengaduan dengan filter pencarian
-$query = "SELECT pengaduan.id_pengaduan, pengaduan.nim, mahasiswa.username, pengaduan.isi_laporan, pengaduan.foto, pengaduan.lokasi, pengaduan.tgl_pengaduan, pengaduan.jenis, pengaduan.kategori, mahasiswa.tlpn 
-          FROM pengaduan 
-          INNER JOIN mahasiswa ON pengaduan.nim = mahasiswa.nim
-          WHERE (pengaduan.isi_laporan LIKE '%$cari%' OR pengaduan.lokasi LIKE '%$cari%')";
+$query = "SELECT 
+    pengaduan.id_pengaduan,
+    pengaduan.nim,
+    mahasiswa.username,
+    pengaduan.isi_laporan,
+    pengaduan.foto,
+    pengaduan.lokasi,
+    pengaduan.latitude,
+    pengaduan.longitude,
+    pengaduan.tgl_pengaduan,
+    pengaduan.jenis,
+    pengaduan.kategori,
+    mahasiswa.tlpn
+FROM pengaduan
+INNER JOIN mahasiswa ON pengaduan.nim = mahasiswa.nim
+WHERE (pengaduan.isi_laporan LIKE '%$cari%' 
+    OR pengaduan.lokasi LIKE '%$cari%')";
+
 
 // Tambahkan filter untuk kategori jika ada
 if ($kategori != '') {
@@ -121,7 +135,7 @@ $username = $_SESSION['username'];
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
                 <a href="" class="navbar-brand">
-                    <img src="assets/dist/img/logo.jpg" alt="FoSt Logo" class="brand-image img-circle elevation-3" style="opacity: .8;width: 75px; height: 75px;">
+                    <img src="assets/dist/img/logo.png" alt="FoSt Logo" class="brand-image img-circle elevation-3" style="opacity: .8;width: 75px; height: 75px;">
                     <span class="brand-text font-weight-light"></span>
                 </a>
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -163,7 +177,7 @@ $username = $_SESSION['username'];
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 gradient-text">Found Objects of Science and Technology</h1>
+                            <h1 class="m-0 gradient-text">Lost Find Sains Teknologi</h1>
                         </div>
                     </div>
                 </div>
@@ -217,18 +231,20 @@ $username = $_SESSION['username'];
                                     <div style="max-height: 400px; overflow-y: auto;"> <!-- Set a max height and enable vertical scrolling -->
                                         <table class="table table-secondary table-striped">
                                             <thead class="table-primary text-center">
-                                                <tr>
-                                                    <th style="width: 10px">No</th>
-                                                    <th style="width: 100px">Foto</th>
-                                                    <th style="width: 200px">Tanggal Pengaduan</th>
-                                                    <th>Isi Laporan</th>
-                                                    <th>Lokasi</th>
-                                                    <th>Username</th>
-                                                    <th>Jenis Laporan</th>
-                                                    <th>Kategori</th> <!-- Tambahkan kolom Kategori -->
-                                                    <th style="width: 100px">Aksi</th>
-                                                </tr>
-                                            </thead>
+    <tr>
+        <th style="width: 10px">No</th>
+        <th style="width: 100px">Foto</th>
+        <th style="width: 200px">Tanggal Pengaduan</th>
+        <th>Isi Laporan</th>
+        <th>Lokasi</th>
+        <th>Map</th>
+        <th>Username</th>
+        <th>Jenis Laporan</th>
+        <th>Kategori</th>
+        <th style="width: 100px">Aksi</th>
+    </tr>
+</thead>
+
 
                                             <tbody class="text-center">
                                                 <?php
@@ -244,6 +260,20 @@ $username = $_SESSION['username'];
                                                         <td><?php echo $row['tgl_pengaduan']; ?></td>
                                                         <td><?php echo $row['isi_laporan']; ?></td>
                                                         <td><?php echo $row['lokasi']; ?></td>
+                                                        <td>
+<?php if (!empty($row['latitude']) && !empty($row['longitude'])) { ?>
+    <button 
+        class="btn btn-info btn-sm"
+        data-toggle="modal"
+        data-target="#mapModal"
+        onclick="showMap(<?php echo $row['latitude']; ?>, <?php echo $row['longitude']; ?>)">
+        <i class="fas fa-map-marker-alt"></i> Lihat Lokasi
+    </button>
+<?php } else { ?>
+    <span class="text-muted">Tidak ada lokasi</span>
+<?php } ?>
+</td>
+
                                                         <td><?php echo $row['username']; ?></td>
                                                         <td><?php echo $row['jenis']; ?></td>
                                                         <td><?php echo isset($row['kategori']) ? $row['kategori'] : 'Kategori Tidak Tersedia'; ?></td>
@@ -272,6 +302,41 @@ $username = $_SESSION['username'];
             <strong>Copyright &copy; <a href="https://github.com/sugazq">riramwp</a>.</strong> All rights reserved.
         </footer>
     </div>
+
+    <!-- Modal Map -->
+<div class="modal fade" id="mapModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Lokasi Laporan</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <iframe
+                    id="mapFrame"
+                    width="100%"
+                    height="400"
+                    frameborder="0"
+                    style="border:0"
+                    allowfullscreen
+                    loading="lazy">
+                </iframe>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+function showMap(lat, lng) {
+    const mapFrame = document.getElementById('mapFrame');
+    mapFrame.src = `https://www.google.com/maps?q=${lat},${lng}&z=17&output=embed`;
+}
+</script>
 
     <script src="assets/plugins/jquery/jquery.min.js"></script>
     <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

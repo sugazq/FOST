@@ -15,37 +15,69 @@ $status = $_POST['status'];  // Ambil status dari form
 $foto = $_FILES['foto']['name'];  // Ambil foto yang diupload
 
 // Cek apakah ada foto baru yang diupload
-if ($foto != "") {
-    // Jika ada foto baru, proses upload seperti biasa
-    $ekstensi_diperbolehkan = array('png', 'jpg', 'jpeg');
-    $x = explode('.', $foto);
-    $ekstensi = strtolower(end($x));
-    $file_tmp = $_FILES['foto']['tmp_name'];
+if (!empty($_FILES['foto']['name'])) {
 
-    if (in_array($ekstensi, $ekstensi_diperbolehkan)) {
-        $nama_foto_baru = rand(1, 999) . '-' . $foto;
-        move_uploaded_file($file_tmp, 'upload/' . $nama_foto_baru);
+    $tmp  = $_FILES['foto']['tmp_name'];
+    $size = $_FILES['foto']['size'];
 
-        // Hapus foto lama jika ada
-        $query_foto_lama = "SELECT foto FROM pengaduan WHERE id_pengaduan = '$id_pengaduan'";
-        $result_foto = mysqli_query($koneksi, $query_foto_lama);
-        $data_foto_lama = mysqli_fetch_assoc($result_foto);
-        $foto_lama = $data_foto_lama['foto'];
-
-        if ($foto_lama && file_exists('upload/' . $foto_lama)) {
-            unlink('upload/' . $foto_lama);  // Hapus foto lama
-        }
-    } else {
-        echo "<script>alert('Ekstensi gambar hanya boleh jpg, jpeg, atau png!');window.location='pengaduan.php';</script>";
-        exit();
+    if ($size > 5 * 1024 * 1024) {
+        echo "<script>alert('Ukuran foto maksimal 5MB');window.location='pengaduan.php';</script>";
+        exit;
     }
+
+    $info = getimagesize($tmp);
+    if ($info === false) {
+        echo "<script>alert('File bukan gambar valid');window.location='pengaduan.php';</script>";
+        exit;
+    }
+
+    $mime = $info['mime'];
+    $allowedMime = ['image/jpeg','image/png','image/webp','image/gif'];
+
+    if (!in_array($mime, $allowedMime)) {
+        echo "<script>alert('Format gambar tidak didukung');window.location='pengaduan.php';</script>";
+        exit;
+    }
+
+    switch ($mime) {
+        case 'image/jpeg': $ext = '.jpg'; break;
+        case 'image/png':  $ext = '.png'; break;
+        case 'image/webp': $ext = '.webp'; break;
+        case 'image/gif':  $ext = '.gif'; break;
+    }
+
+    $nama_foto_baru = uniqid('pengaduan_', true) . $ext;
+    move_uploaded_file($tmp, 'upload/' . $nama_foto_baru);
+
+    // hapus foto lama
+    $q = mysqli_query($koneksi, "SELECT foto FROM pengaduan WHERE id_pengaduan='$id_pengaduan'");
+    $old = mysqli_fetch_assoc($q)['foto'];
+    if ($old && file_exists('upload/'.$old)) {
+        unlink('upload/'.$old);
+    }
+
 } else {
-    // Jika tidak ada foto baru, gunakan foto lama
-    $query_foto_lama = "SELECT foto FROM pengaduan WHERE id_pengaduan = '$id_pengaduan'";
-    $result_foto = mysqli_query($koneksi, $query_foto_lama);
-    $data_foto_lama = mysqli_fetch_assoc($result_foto);
-    $nama_foto_baru = $data_foto_lama['foto'];  // Gunakan foto lama
+    // pakai foto lama
+    $q = mysqli_query($koneksi, "SELECT foto FROM pengaduan WHERE id_pengaduan='$id_pengaduan'");
+    $nama_foto_baru = mysqli_fetch_assoc($q)['foto'];
 }
+
+$latitude  = $_POST['latitude'] ?? null;
+$longitude = $_POST['longitude'] ?? null;
+
+if (
+    empty($latitude) || 
+    empty($longitude) || 
+    !is_numeric($latitude) || 
+    !is_numeric($longitude)
+) {
+    echo "<script>
+        alert('Data lokasi tidak valid. Pastikan koordinat tersedia.');
+        window.location='pengaduan.php';
+    </script>";
+    exit;
+}
+
 
 // Update data pengaduan dengan kategori dan status
 $query = "UPDATE pengaduan SET isi_laporan = '$isi_laporan', lokasi = '$lokasi', jenis = '$jenis', kategori = '$kategori', status = '$status', foto = '$nama_foto_baru' WHERE id_pengaduan = '$id_pengaduan'";

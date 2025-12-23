@@ -32,6 +32,10 @@ $username = $_SESSION['username'];
     <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="assets/dist/img/logo1.png" rel="icon">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="assets/plugins/jquery/jquery.min.js"></script>
+<script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -103,7 +107,7 @@ $username = $_SESSION['username'];
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
                 <a href="" class="navbar-brand">
-                    <img src="assets/dist/img/logo.jpg" alt="FoSt Logo" class="brand-image img-circle elevation-3" style="opacity: .8; width: 75px; height: 75px;">
+                    <img src="assets/dist/img/logo.png" alt="FoSt Logo" class="brand-image img-circle elevation-3" style="opacity: .8; width: 75px; height: 75px;">
                     <span class="brand-text font-weight-light"></span>
                 </a>
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -289,7 +293,6 @@ $username = $_SESSION['username'];
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h ```php
                                             <h4 class="modal-title">Tambah Pengaduan</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -311,9 +314,14 @@ $username = $_SESSION['username'];
                                                         <textarea class="form-control" name="isi_laporan" rows="3" placeholder="Enter ..." required></textarea>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label>Lokasi</label>
-                                                        <input type="text" name="lokasi" class="form-control" required>
-                                                    </div>
+    <label>Lokasi (Klik di Peta)</label>
+    <div id="mapTambah" style="height:300px; border-radius:8px;"></div>
+
+    <input type="text" name="lokasi" id="lokasi" class="form-control mt-2" readonly required>
+    <input type="hidden" name="latitude" id="latitude">
+    <input type="hidden" name="longitude" id="longitude">
+</div>
+
                                                     <div class="form-group">
                                                         <label>Jenis</label>
                                                         <select name="jenis" class="form-control" required>
@@ -372,5 +380,43 @@ $username = $_SESSION['username'];
         <script src="assets/plugins/jquery/jquery.min.js"></script>
         <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="assets/dist/js/adminlte.min.js"></script>
+        <script>
+let mapTambah, markerTambah;
+
+$('#modal-tambah').on('shown.bs.modal', function () {
+
+    if (mapTambah) {
+        mapTambah.invalidateSize();
+        return;
+    }
+
+    mapTambah = L.map('mapTambah').setView([-6.931, 107.717], 16);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(mapTambah);
+
+    mapTambah.on('click', function (e) {
+        const lat = e.latlng.lat;
+        const lon = e.latlng.lng;
+
+        if (markerTambah) {
+            mapTambah.removeLayer(markerTambah);
+        }
+
+        markerTambah = L.marker([lat, lon]).addTo(mapTambah);
+
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lon;
+
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('lokasi').value = data.display_name;
+            });
+    });
+});
+</script>
+
     </body>
 </html>

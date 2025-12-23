@@ -1,0 +1,15 @@
+# Upload user files
+upload/
+
+# File dokumen & tugas
+*.pdf
+*.ppt
+*.pptx
+
+# File sementara / aneh
+files for your website should be uploaded here!
+
+# OS & editor
+.DS_Store
+Thumbs.db
+.prettierrc

@@ -7,12 +7,12 @@ include 'cek_akses.php';
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>FOST - Found Objects of Science and Technology</title>
+  <title>FOST - Found Science and Technology Object</title>
   <meta name="description" content="Lapor barang hilang dan temukan objek sains dan teknologi.">
   <meta name="keywords" content="FOST, barang hilang, pengaduan, sains, teknologi">
 
   <!-- Favicons -->
-  <link href="assets/dist/img/logo1.png" rel="icon">
+  <link href="assets/dist/img/logo.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
@@ -42,9 +42,9 @@ include 'cek_akses.php';
 
     /* Sesuaikan logo */
     .header .logo img {
-      height: 100px;
+      height: 150px;
       /* Tinggi logo yang diinginkan */
-      width: auto;
+      width: 140px;
       /* Jaga rasio aspek */
       max-height: 100%;
       /* Pastikan tidak lebih besar dari kontainer */
@@ -120,7 +120,7 @@ include 'cek_akses.php';
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
       <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <img src="assets/dist/img/logo1.png" alt="Logo">
+        <img src="assets/dist/img/logo.png" alt="Logo">
         <h1 class="sitename"></h1>
       </a>
 
@@ -168,7 +168,7 @@ include 'cek_akses.php';
         <div class="row gy-4">
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
             <p class="who-we-are">Siapa Kami</p>
-            <h3>FOST - Found Objects of Science and Technology</h3>
+            <h3>FOST - Found Science and Technology Object</h3>
             <p class="fst-italic">
               Kami adalah platform untuk membantu Anda melaporkan barang hilang maupun melaporkan penemuan barang hilang di sains dan teknologi.
             </p>
@@ -288,7 +288,7 @@ include 'cek_akses.php';
 
         <!-- Additional Logo/Content -->
         <div class="col-lg-4 col-md-6 footer-logo text-center">
-          <img src="assets/dist/img/logo1.png" alt="FOST Logo" class="img-fluid mb-3" style="max-width: 150px;">
+          <img src="assets/dist/img/logo.png" alt="FOST Logo" class="img-fluid mb-3" style="max-width: 150px;">
           <p class="mt-2">Mendukung pelaporan dan pencarian barang hilang untuk komunitas kami.</p>
         </div>
       </div>
@@ -298,7 +298,7 @@ include 'cek_akses.php';
     <div class="container text-center mt-4">
       <p>© <strong class="sitename">FOST</strong> All Rights Reserved</p>
       <div class="credits">
-        Designed by <a href="https://github.com/sugazq">fostretrieve</a>
+        Designed by <a href="https://github.com/sugazq">FOST retrieve</a>
       </div>
     </div>
   </footer>

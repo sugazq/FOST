@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Login FOST</title>
+    <title>Login L0FIsT</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <!-- Favicons -->
-  <link href="assets/dist/img/logo1.png" rel="icon">
+  <link href="assets/dist/img/logo.png" rel="icon">
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center min-h-screen" style="background-image: url('assets/dist/img/bglogin.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
@@ -18,7 +18,7 @@
         </div>
         <div class="w-full md:w-1/2 mt-8 md:mt-0 md:ml-8">
             <h2 class="text-2xl font-semibold text-gray-700">Selamat datang!</h2>
-            <p class="text-gray-500 mb-6">Masukan akun FOST anda</p>
+            <p class="text-gray-500 mb-6">Masukan akun L0FIsT anda</p>
             <?php 
             if(isset($_GET['pesan'])){
                 if($_GET['pesan'] == "gagal"){ ?>

@@ -22,7 +22,9 @@ if ($_SESSION['level'] == "") {
     <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="icon" type="image/png" href="../assets/dist/img/logo1.jpg">
+    <link rel="icon" type="image/png" href="../assets/dist/img/logo.png">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
     <style>
     body {
       font-family: 'Roboto', sans-serif;
@@ -145,7 +147,7 @@ if ($_SESSION['level'] == "") {
     <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
         <div class="container">
             <a href="" class="navbar-brand">
-                <img src="../assets/dist/img/logo1.png" alt="" class="brand-image img-circle elevation-3" style="opacity: .8;width: 75px; height: 75px;">
+                <img src="../assets/dist/img/logo.png" alt="" class="brand-image img-circle elevation-3" style="opacity: .8;width: 75px; height: 75px;">
                 <span class="brand-text font-weight-light"></span>
             </a>
 
@@ -235,18 +237,20 @@ if ($_SESSION['level'] == "") {
                                 <div style="max-height: 400px; overflow-y: auto;">
                                     <table class="table table-secondary table-striped-columns">
                                         <thead class="table-primary text-center">
-                                            <tr>
-                                                <th style="width: 10px">No</th>
-                                                <th style="width: 100px">Foto</th>
-                                                <th style="width: 200px">Tanggal Laporan</th>
-                                                <th>Isi Laporan</th>
-                                                <th>Lokasi</th>
-                                                <th>Username</th>
-                                                <th>Jenis Laporan</th>
-                                                <th>Kategori</th>
-                                                <th style="width: 100px">Aksi</th>
-                                            </tr>
-                                        </thead>
+<tr>
+    <th style="width: 10px">No</th>
+    <th style="width: 100px">Foto</th>
+    <th style="width: 200px">Tanggal Laporan</th>
+    <th>Isi Laporan</th>
+    <th>Lokasi</th>
+    <th>Map</th>
+    <th>Username</th>
+    <th>Jenis Laporan</th>
+    <th>Kategori</th>
+    <th style="width: 100px">Aksi</th>
+</tr>
+</thead>
+
                                         <tbody class="text-center">
                                             <?php
                                             $no = 1;
@@ -272,25 +276,71 @@ if ($_SESSION['level'] == "") {
                                             $result = mysqli_query($koneksi, $query);
                                             while ($row = mysqli_fetch_assoc($result)) { ?>
                                                 <tr>
-                                                    <td><?php echo $no++; ?></td>
-                                                    <?php 
-                                                    $fotoPath = '../upload/' . $row['foto'];
-                                                    if (!empty($row['foto']) && file_exists($fotoPath)) {
-                                                        echo "<td><img src='$fotoPath' alt='Foto' style='width: 100px; height: auto;'></td>";
-                                                    } else {
-                                                        echo "<td>Tidak ada foto</td>";
-                                                        echo "<td>Path: $fotoPath</td>"; // Debugging line
-                                                    } ?>
-                                                    <td><?php echo $row['tgl_pengaduan']; ?></td>
-                                                    <td><?php echo $row['isi_laporan']; ?></td>
-                                                    <td><?php echo $row['lokasi']; ?></td>
-                                                    <td><?php echo $row['username']; ?></td>
-                                                    <td><?php echo $row['jenis']; ?></td>
-                                                    <td><?php echo isset($row['kategori']) ? $row['kategori'] : 'Kategori Tidak Tersedia'; ?></td>
-                                                    <td>
-                                                        <a href="hapus_pengaduan.php?id_pengaduan=<?php echo $row['id_pengaduan']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin Mau Di Hapus!!!')"><i class="fas fa-trash"></i></a>
-                                                    </td>
-                                                </tr>
+    <td><?= $no++; ?></td>
+
+    <?php 
+    $fotoPath = '../upload/' . $row['foto'];
+    if (!empty($row['foto']) && file_exists($fotoPath)) {
+        echo "<td><img src='$fotoPath' style='width:100px'></td>";
+    } else {
+        echo "<td>Tidak ada foto</td>";
+    }
+    ?>
+
+    <td><?= $row['tgl_pengaduan']; ?></td>
+    <td><?= $row['isi_laporan']; ?></td>
+    <td><?= $row['lokasi']; ?></td>
+
+    <!-- MAP BUTTON -->
+    <td>
+        <?php if (!empty($row['latitude']) && !empty($row['longitude'])) { ?>
+            <button class="btn btn-success btn-sm"
+                data-toggle="modal"
+                data-target="#modalMap<?= $row['id_pengaduan']; ?>">
+                <i class="fas fa-map-marker-alt"></i> Lihat
+            </button>
+        <?php } else { ?>
+            <span class="badge badge-secondary">Tidak ada</span>
+        <?php } ?>
+    </td>
+
+    <td><?= $row['username']; ?></td>
+    <td><?= $row['jenis']; ?></td>
+    <td><?= $row['kategori']; ?></td>
+
+    <td>
+        <a href="hapus_pengaduan.php?id_pengaduan=<?= $row['id_pengaduan']; ?>"
+           class="btn btn-danger btn-sm"
+           onclick="return confirm('Yakin Mau Di Hapus!!!')">
+           <i class="fas fa-trash"></i>
+        </a>
+    </td>
+</tr>
+<div class="modal fade" id="modalMap<?= $row['id_pengaduan']; ?>">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Lokasi Pengaduan</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div id="map<?= $row['id_pengaduan']; ?>" 
+                     data-lat="<?= $row['latitude']; ?>" 
+                     data-lng="<?= $row['longitude']; ?>"
+                     style="height:400px;border-radius:10px;"></div>
+
+                <small class="text-muted">
+                    <?= $row['lokasi']; ?><br>
+                    Lat: <?= $row['latitude']; ?> | Lng: <?= $row['longitude']; ?>
+                </small>
+            </div>
+
+        </div>
+    </div>
+</div>
+
                                             <?php } ?>
                                         </tbody>
                                     </table>
@@ -315,5 +365,29 @@ if ($_SESSION['level'] == "") {
 <script src="../assets/plugins/jquery/jquery.min.js"></script>
 <script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/dist/js/adminlte.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+$('.modal').on('shown.bs.modal', function () {
+
+    const modal = $(this);
+    const mapDiv = modal.find('[id^="map"]')[0];
+
+    if (mapDiv.dataset.loaded) return;
+
+    const lat = mapDiv.dataset.lat;
+    const lng = mapDiv.dataset.lng;
+
+    const map = L.map(mapDiv.id).setView([lat, lng], 16);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    L.marker([lat, lng]).addTo(map);
+
+    mapDiv.dataset.loaded = true;
+});
+</script>
+
 </body>
 </html>
