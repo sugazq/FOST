@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Login L0FIsT</title>
+    <title>Login FOST</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <!-- Favicons -->
@@ -18,7 +18,7 @@
         </div>
         <div class="w-full md:w-1/2 mt-8 md:mt-0 md:ml-8">
             <h2 class="text-2xl font-semibold text-gray-700">Selamat datang!</h2>
-            <p class="text-gray-500 mb-6">Masukan akun L0FIsT anda</p>
+            <p class="text-gray-500 mb-6">Masukan akun FOST anda</p>
             <?php 
             if(isset($_GET['pesan'])){
                 if($_GET['pesan'] == "gagal"){ ?>

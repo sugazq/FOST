@@ -39,6 +39,8 @@ $history_result = mysqli_query($koneksi, $query_history);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard | FOST</title>
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d6efd">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
@@ -216,14 +218,16 @@ $history_result = mysqli_query($koneksi, $query_history);
                                     <table class="table table-info table-striped-columns">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
-                                                <th>Gambar</th>
-                                                <th>Tanggal Laporan</th>
-                                                <th>Isi Laporan</th>
-                                                <th>Lokasi</th>
-                                                <th>Jenis</th>
-                                                <th>Status</th>
-                                            </tr>
+    <th>No</th>
+    <th>Gambar</th>
+    <th>Tanggal Laporan</th>
+    <th>Isi Laporan</th>
+    <th>Lokasi</th>
+    <th>Map</th>
+    <th>Jenis</th>
+    <th>Status</th>
+</tr>
+
                                         </thead>
                                         <tbody>
                                             <?php
@@ -241,6 +245,18 @@ $history_result = mysqli_query($koneksi, $query_history);
                                                     <td><?php echo $row['tgl_pengaduan']; ?></td>
                                                     <td><?php echo $row['isi_laporan']; ?></td>
                                                     <td><?php echo $row['lokasi']; ?></td>
+                                                    <td>
+<?php if (!empty($row['latitude']) && !empty($row['longitude'])) { ?>
+    <a 
+      href="https://www.google.com/maps?q=<?php echo $row['latitude']; ?>,<?php echo $row['longitude']; ?>"
+      target="_blank"
+      class="btn btn-sm btn-info">
+        <i class="fas fa-map-marker-alt"></i> Lihat
+    </a>
+<?php } else { ?>
+    <span class="text-muted">Tidak ada</span>
+<?php } ?>
+</td>
                                                     <td><?php echo $row['jenis']; ?></td>
                                                     <td><?php echo $row['status']; ?></td>
                                                 </tr>
@@ -264,6 +280,15 @@ $history_result = mysqli_query($koneksi, $query_history);
     <script src="assets/plugins/jquery/jquery.min.js"></script>
     <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/dist/js/adminlte.min.js"></script>
+    <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/fost-real/service-worker.js')
+    .then(() => console.log('PWA aktif'))
+    .catch(err => console.error(err));
+}
+</script>
+
+
 </body>
 
 </html>

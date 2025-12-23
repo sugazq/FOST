@@ -112,6 +112,18 @@ include 'cek_akses.php';
       }
     }
   </style>
+  <link rel="manifest" href="/fost-real/manifest.json">
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/fost-real/service-worker.js')
+      .then(() => console.log('PWA aktif'))
+      .catch(err => console.error('SW gagal:', err));
+  });
+}
+</script>
+
 </head>
 
 <body class="index-page">

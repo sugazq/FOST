@@ -7,10 +7,23 @@ include 'koneksi.php'; // Pastikan Anda menghubungkan ke database
 
 $nim = $_SESSION['nim'];
 
-$query = "SELECT pengaduan.id_pengaduan, pengaduan.nim, mahasiswa.username, pengaduan.isi_laporan, pengaduan.foto, pengaduan.lokasi, pengaduan.tgl_pengaduan, pengaduan.jenis, pengaduan.kategori, pengaduan.status
-          FROM pengaduan
-          INNER JOIN mahasiswa ON pengaduan.nim = mahasiswa.nim
-          WHERE pengaduan.nim = '$nim'";
+$query = "SELECT 
+    pengaduan.id_pengaduan,
+    pengaduan.nim,
+    mahasiswa.username,
+    pengaduan.isi_laporan,
+    pengaduan.foto,
+    pengaduan.lokasi,
+    pengaduan.latitude,
+    pengaduan.longitude,
+    pengaduan.tgl_pengaduan,
+    pengaduan.jenis,
+    pengaduan.kategori,
+    pengaduan.status
+FROM pengaduan
+INNER JOIN mahasiswa ON pengaduan.nim = mahasiswa.nim
+WHERE pengaduan.nim = '$nim'";
+
 
 $result = mysqli_query($koneksi, $query);
 
@@ -27,6 +40,8 @@ $username = $_SESSION['username'];
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FOST</title>
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d6efd">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
@@ -228,6 +243,9 @@ $username = $_SESSION['username'];
                                                                         <div class="form-group">
                                                                             <label>Lokasi</label>
                                                                             <input type="text" name="lokasi" class="form-control" value="<?php echo $row['lokasi']; ?>" required>
+                                                                        <input type="hidden" name="latitude" value="<?php echo $row['latitude']; ?>">
+<input type="hidden" name="longitude" value="<?php echo $row['longitude']; ?>">
+
                                                                         </div>
 
                                                                         <div class="form-group">
@@ -417,6 +435,14 @@ $('#modal-tambah').on('shown.bs.modal', function () {
     });
 });
 </script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('Service Worker registered'))
+    .catch(err => console.error('SW failed', err));
+}
+</script>
+
 
     </body>
 </html>
